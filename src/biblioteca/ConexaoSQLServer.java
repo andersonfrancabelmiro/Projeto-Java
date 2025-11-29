@@ -13,8 +13,8 @@ import java.sql.SQLException;
  * @author Anderson F Belmiro
  */
 public class ConexaoSQLServer {
-    //private static final String SERVIDOR = "//TBS0676769W11-1\\SQLEXPRESS:1433";
-     private static final String SERVIDOR = "//ANDERSON\\SQLEXPRESS:1433";
+    private static final String SERVIDOR = "//TBS0676769W11-1\\SQLEXPRESS:1433";
+    //private static final String SERVIDOR = "//ANDERSON\\SQLEXPRESS:1433";
     private static final String BANCO_DE_DADOS = "biblioteca_marcao";
 
     private static final String CONNECTION_URL =
