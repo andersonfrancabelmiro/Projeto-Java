@@ -2,8 +2,10 @@ package biblioteca;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLWarning;
-import java.util.Scanner;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 public class Livros {
     private int     idLivro;
@@ -72,14 +74,20 @@ public class Livros {
         this.disponivel = disponivel;
     }    
     
-        public Livros(int idlivro, String telefone) { 
+    public Livros (int idlivro, String telefone) { 
     }
     
-    public Livros(String tituloMetodo, int anoMetodo, String autorMetodo, String generoMetodo, int disponivelMetodo){
+    public Livros (int idlivro){
+        
+    }
+    
+    public Livros(String titulo, int ano, String autor,
+           String genero, int disponivel){
         
     }
 
-    public Livros(String titulo, String autor, int ano, String genero, int disponivel) {
+    public Livros(String titulo, String autor, int ano,
+           String genero, int disponivel) {
         this.titulo = titulo;
         this.autor = autor;
         this.ano = ano;
@@ -103,17 +111,14 @@ public class Livros {
             stmt.setString(4, this.getGenero());
             stmt.setInt(5, this.getDisponivel());
 
-
             stmt.execute();
 
-            //inserir printpara retorno no java
             SQLWarning warning = stmt.getWarnings();
-            System.out.println( warning.getMessage());
+            JOptionPane.showMessageDialog(null,warning.getMessage());
 
             conn.close();
          } catch (Exception e) {
 
-            // Caso aconteça algum erro (SQL, conexão, etc.), mostra a mensagem no console
             System.err.println("Erro: " + e.getMessage());
         }               
     }
@@ -134,16 +139,44 @@ public class Livros {
             stmt.execute();
             
             SQLWarning warning = stmt.getWarnings();
-            System.out.println( warning.getMessage());
+            JOptionPane.showMessageDialog(null, warning.getMessage());
         
             conn.close();
         } catch (Exception e) {
 
-            // Caso aconteça algum erro (SQL, conexão, etc.), mostra a mensagem no console
             System.err.println("Erro: " + e.getMessage());
         }  
         
     }
     
+    public void devolucao(){
+        try {
+        
+            Connection conn = ConexaoSQLServer.abrirConexao();
+
+            String P_registrar_devolucao = "{CALL P_registrar_devolucao(?)}";
+
+            CallableStatement stmt = conn.prepareCall(P_registrar_devolucao);
+            
+            stmt.setInt(1, this.idLivro);
+            
+            stmt.execute();
+            
+            SQLWarning warning = stmt.getWarnings();
+            JOptionPane.showMessageDialog(null, warning.getMessage());
+        
+            conn.close();
+
+        } catch (Exception e) {
+
+            System.err.println("Erro: " + e.getMessage());
+            }
+        }
+    
     
 }
+    
+
+    
+    
+

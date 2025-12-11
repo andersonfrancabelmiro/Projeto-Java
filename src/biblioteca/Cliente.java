@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package biblioteca;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLWarning;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,6 +51,7 @@ public class Cliente {
             Connection conn = ConexaoSQLServer.abrirConexao();
             
             String inserirclientes = "{CALL P_inserir_clientes(?,?,?)}";
+            
             CallableStatement stmt = conn.prepareCall(inserirclientes);
             
             stmt.setString(1, nome);
@@ -61,14 +60,13 @@ public class Cliente {
 
             stmt.execute();
             
-            //inserir printpara retorno no java
+            //inserir print do sql para retorno no java
             SQLWarning warning = stmt.getWarnings();
-            System.out.println( warning.getMessage());
+            JOptionPane.showMessageDialog(null,warning.getMessage());
         
             conn.close();
         }catch(Exception e) {
 
-            // Caso aconteça algum erro (SQL, conexão, etc.), mostra a mensagem no console
             System.err.println("Erro: " + e.getMessage());
             
         }           
